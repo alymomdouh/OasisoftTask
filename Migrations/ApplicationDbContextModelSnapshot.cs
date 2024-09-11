@@ -229,12 +229,11 @@ namespace OasisoftTask.Migrations
 
             modelBuilder.Entity("OasisoftTask.Core.DomainModels.ToDo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ApplicationUserObjId")
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
@@ -248,11 +247,9 @@ namespace OasisoftTask.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserObjId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("ToDos", (string)null);
+                    b.ToTable("ToDos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -309,12 +306,6 @@ namespace OasisoftTask.Migrations
             modelBuilder.Entity("OasisoftTask.Core.DomainModels.ToDo", b =>
                 {
                     b.HasOne("OasisoftTask.Core.DomainModels.ApplicationUser", "ApplicationUserObj")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserObjId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OasisoftTask.Core.DomainModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)

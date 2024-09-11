@@ -6,18 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OasisoftTask.Migrations
 {
     /// <inheritdoc />
-    public partial class rolemanagment : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ApplicationUserObjId",
-                table: "ToDos",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -166,15 +159,25 @@ namespace OasisoftTask.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ToDos_ApplicationUserObjId",
-                table: "ToDos",
-                column: "ApplicationUserObjId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ToDos_UserId",
-                table: "ToDos",
-                column: "UserId");
+            migrationBuilder.CreateTable(
+                name: "ToDos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Completed = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ToDos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ToDos_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -215,33 +218,15 @@ namespace OasisoftTask.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ToDos_AspNetUsers_ApplicationUserObjId",
+            migrationBuilder.CreateIndex(
+                name: "IX_ToDos_UserId",
                 table: "ToDos",
-                column: "ApplicationUserObjId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ToDos_AspNetUsers_UserId",
-                table: "ToDos",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ToDos_AspNetUsers_ApplicationUserObjId",
-                table: "ToDos");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ToDos_AspNetUsers_UserId",
-                table: "ToDos");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -258,22 +243,13 @@ namespace OasisoftTask.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ToDos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ToDos_ApplicationUserObjId",
-                table: "ToDos");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ToDos_UserId",
-                table: "ToDos");
-
-            migrationBuilder.DropColumn(
-                name: "ApplicationUserObjId",
-                table: "ToDos");
         }
     }
 }
