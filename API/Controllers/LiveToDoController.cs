@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OasisoftTask.Applications.IServices;
 using OasisoftTask.Common;
 
@@ -6,6 +7,7 @@ namespace OasisoftTask.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LiveToDoController : ControllerBase
     {
         private readonly ILiveToDoService _liveToDoService;

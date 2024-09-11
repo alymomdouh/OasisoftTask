@@ -10,11 +10,11 @@ namespace OasisoftTask.Infrastructure.Configurations
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasOne<ApplicationUser>()
+            //builder.HasOne<ApplicationUser>()
+            builder.HasOne(e => e.ApplicationUserObj)
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-
         }
     }
 }

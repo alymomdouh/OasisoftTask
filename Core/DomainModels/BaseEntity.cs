@@ -8,6 +8,6 @@ namespace OasisoftTask.Core.DomainModels
         [Required]
         [Key]
         // [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; }
+        public int Id { get; }
     }
 }

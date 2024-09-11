@@ -17,17 +17,17 @@ namespace OasisoftTask.API.Controllers
         {
             _toDoService = toDoService;
         }
-        [HttpPost("AddAsync")]
+        [HttpPost("Create")]
         public async Task<IActionResult> AddAsync(CreateToDo model)
         {
             return Ok(await _toDoService.AddAsync(model));
         }
-        [HttpDelete(nameof(DeleteAsync))]
+        [HttpDelete("Delete")]
         public async Task DeleteAsync(int id)
         {
             await _toDoService.DeleteAsync(id);
         }
-        [HttpGet("GetByIdAsync")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             return Ok(await _toDoService.GetByIdAsync(id));

@@ -6,7 +6,7 @@ namespace OasisoftTask.Applications.Profiles
 {
     public class ToDoProfile : Profile
     {
-        protected ToDoProfile()
+        public ToDoProfile()
         {
             CreateMap<CreateToDo, ToDo>();
             CreateMap<ToDo, ListToDo>();
